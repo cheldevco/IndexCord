@@ -46,7 +46,23 @@ npm run install-all
 
 ## Running the Application
 
-### Development Mode
+### Using Docker (Recommended)
+
+**Production:**
+```bash
+docker-compose up -d
+```
+
+**Development:**
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:5000
+
+### Development Mode (Local)
 
 Run both server and client concurrently:
 ```bash
@@ -135,6 +151,43 @@ IndexCord/
 - `new_message` - New message received
 - `user_typing` - User is typing
 - `user_stopped_typing` - User stopped typing
+
+## Docker
+
+### Production Build
+
+Build and run with docker-compose:
+```bash
+docker-compose up -d --build
+```
+
+Stop containers:
+```bash
+docker-compose down
+```
+
+### Development Build
+
+Run in development mode with hot reload:
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+### Environment Variables
+
+Create a `.env` file for production:
+```env
+JWT_SECRET=your-secret-key-change-in-production
+```
+
+### Docker Files
+
+- `Dockerfile` - Single container build (all-in-one)
+- `Dockerfile.backend` - Backend only
+- `Dockerfile.frontend` - Frontend only (with nginx)
+- `Dockerfile.dev` - Development build
+- `docker-compose.yml` - Production setup (separate services)
+- `docker-compose.dev.yml` - Development setup
 
 ## Notes
 

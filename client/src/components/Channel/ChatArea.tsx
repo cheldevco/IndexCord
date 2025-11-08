@@ -3,7 +3,13 @@ import { useSocket } from '../../contexts/SocketContext';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+// В production используем относительный путь (nginx проксирует)
+// В development используем полный URL
+const API_URL = process.env.REACT_APP_API_URL 
+  ? `${process.env.REACT_APP_API_URL}/api`
+  : process.env.NODE_ENV === 'production'
+  ? '/api'
+  : 'http://localhost:5000/api';
 
 interface Channel {
   id: string;

@@ -14,7 +14,18 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (token) {
-      const newSocket = io('http://localhost:5000', {
+      // В production используем тот же origin (nginx проксирует)
+      // В development используем полный URL
+      let socketUrl: string;
+      if (process.env.REACT_APP_API_URL) {
+        socketUrl = process.env.REACT_APP_API_URL;
+      } else if (process.env.NODE_ENV === 'production') {
+        socketUrl = window.location.origin;
+      } else {
+        socketUrl = 'http://localhost:5000';
+      }
+      
+      const newSocket = io(socketUrl, {
         auth: { token }
       });
 
